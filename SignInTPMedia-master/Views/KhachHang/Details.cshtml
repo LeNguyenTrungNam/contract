@@ -1,0 +1,99 @@
+﻿@model SignInTPMedia.Models.Khachhang
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    label{
+        color: #FF0000
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="content-inner">
+        <div class="page-header page-header-light shadow">
+            <div class="page-header-content d-lg-flex border-top">
+                <div class="d-flex">
+                    <div class="breadcrumb py-2">
+                        <a asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="ph-house"></i></a>
+                        <span class="breadcrumb-item active">Khách Hàng</span>
+                        <span class="breadcrumb-item active"><a asp-controller="KhachHang" asp-action="Index">DS Khách Hàng</a></span>
+                        <span class="breadcrumb-item active"><a asp-controller="KhachHang" asp-action="Details">Thông Tin Khách Hàng</a></span>
+
+                    </div>
+
+                    <a href="#breadcrumb_elements"
+                       class="btn btn-light align-self-center collapsed d-lg-none border-transparent rounded-pill p-0 ms-auto"
+                       data-bs-toggle="collapse">
+                        <i class="ph-caret-down collapsible-indicator ph-sm m-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="card">
+                <h6 style="font-size: 30px; text-align: center;margin: 15px 0px;color: #0066FF; ">Thông Tin Khách Hàng</h6>
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="MaKh" />
+                    <fieldset style="margin: 15px !important;">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label asp-for="TenKh" class="control-label">Tên Khách Hàng: </label>
+                                @Html.DisplayFor(model => model.TenKh)
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label asp-for="Sdt" class="control-label">Số Điện Thoại: </label>
+                                    @Html.DisplayFor(model => model.Sdt)
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="control-label">Email: </label>
+                                    @Html.DisplayFor(model => model.Email)
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="control-label">Địa Chỉ Liên Hệ: </label>
+                                    @Html.DisplayFor(model => model.DiaChiLienHe)
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="control-label">Tên Công Ty: </label>
+                                    @Html.DisplayFor(model => model.TenCongty)
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="control-label">Địa Chỉ Công Ty: </label>
+                                    @Html.DisplayFor(model => model.DiaChiCongTy)
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="control-label">Mã Số Thuế: </label>
+                                    @Html.DisplayFor(model => model.MaSoThue)
+                                </div>
+                            </div>
+
+                    </fieldset>
+                    <div style="justify-content:center !important" class="card-footer d-flex justify-content-end">
+                        <a class="btn btn-primary ms-3" style="text-decoration: none;"
+                           asp-action="Index">Quay Lại</a>
+                        <a class="btn btn-primary ms-3" style="text-decoration: none;"
+                           asp-action="Edit" asp-route-id="@Model?.MaKh">Sửa</a>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

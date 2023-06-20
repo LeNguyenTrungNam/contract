@@ -1,0 +1,124 @@
+﻿@model IEnumerable<SignInTPMedia.Models.Khachhang>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="content-wrapper">
+    <div class="content-inner">
+        <div class="page-header page-header-light shadow">
+            <div class="page-header-content d-lg-flex">
+                <div class="collapse d-lg-block ms-lg-auto" id="breadcrumb_elements">
+                   
+                </div>
+            </div>
+
+            <div class="page-header-content d-lg-flex border-top">
+                <div class="d-flex">
+                    <div class="breadcrumb py-2">
+                        <a asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="ph-house"></i></a>
+                        <span class="breadcrumb-item active">Danh Sách</span>
+                        <span class="breadcrumb-item active"><a asp-action="Index">DS Khách Hàng</a></span>
+                    </div>
+
+                    <a href="#breadcrumb_elements"
+                       class="btn btn-light align-self-center collapsed d-lg-none border-transparent rounded-pill p-0 ms-auto"
+                       data-bs-toggle="collapse">
+                        <i class="ph-caret-down collapsible-indicator ph-sm m-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="card">
+                <div class="card-body">
+                    <a class="btn btn-primary" asp-action="Create">Thêm Khách Hàng</a>
+                </div>
+                <table class="table datatable-selection-single">
+                    <thead>
+                        <tr>
+                            <th>
+                                <span>Thông Tin Cá Nhân</span>
+                            </th>
+                            <th>
+                                <span>Công Ty</span>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td style="max-width:280px" class="ellipsis">
+                                    <label class="form-label cursor-move">Tên KH: <a asp-action="Details" asp-route-id="@item.MaKh">@Html.DisplayFor(modelItem => item.TenKh)</a></label>
+                                    
+                                    <div class="item">
+                                        <label class="form-label cursor-move">SĐT:  @Html.DisplayFor(modelItem => item.Sdt)</label>
+                                    </div>
+                                    <div class="item">
+                                        <label class="form-label cursor-move">Email: @Html.DisplayFor(modelItem => item.Email)</label>
+                                    </div>
+                                </td>
+                                <td style="max-width:280px" class="ellipsis">
+                                    <div class="description">
+                                        <label class="form-label cursor-move">Tên CTY:  @Html.DisplayFor(modelItem => item.TenCongty)</label>
+                                       
+                                        <div class="item">
+                                            <label class="form-label cursor-move">Đ/C: @Html.DisplayFor(modelItem => item.DiaChiCongTy)</label>
+                                        </div>
+                                        <div class="item">
+                                            <label class="form-label cursor-move">MST: @Html.DisplayFor(modelItem => item.MaSoThue)</label>
+                                        </div>
+                                        <span class="arrow"></span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.MaKh"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    @* <a asp-action="Details" asp-route-id="@item.IdbaoCao">Details</a>*@
+                                    <a asp-action="Delete" asp-route-id="@item.MaKh" onclick="return confirm('Bạn có chắc muốn xóa không?')"><i class="fa-solid fa-trash-can"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.arrow').click(function () {
+                $(this).toggleClass('reverse');
+            });
+        });
+    </script>
+    <script>
+        // Lấy tất cả các td có class "ellipsis"
+        const tdList = document.querySelectorAll('.ellipsis');
+
+        // Đăng ký sự kiện click cho từng td
+        tdList.forEach(td => {
+            const arrow = td.querySelector('.arrow');
+
+            arrow.addEventListener('click', (event) => {
+                event.stopPropagation();
+                td.classList.toggle('expanded');
+            });
+        });
+    </script>
+        }
+    <style>
+        .expanded {
+            max-width: 150px;
+            white-space: normal;
+            text-overflow: unset;
+            text-align: justify;
+        }
+    </style>
+

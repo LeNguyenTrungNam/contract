@@ -1,0 +1,150 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Tiền Phong Media - Marketing cam kết hiệu quả</title>
+    <link href="~/assets/fonts/inter/inter.css" rel="stylesheet" />
+    <link href="~/assets/icons/phosphor/styles.min.css" rel="stylesheet" />
+    <link href="~/assets/css/ltr/all.min.css" rel="stylesheet" />
+    <link href="~/ckeditor5-build-classic/sample/css/sample.css" rel="stylesheet" />
+    <link href="~/assets/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet" />
+    <link href="~/assets/fontawesome-free-6.4.0-web/css/all.min.css" rel="stylesheet" />
+
+    <environment include="Development">
+        <script src="~/assets/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/assets/lib/jquery/dist/jquery.js"></script>
+        <script src="~/assets/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/assets/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="~/assets/lib/bootstrap/dist/js/bootstrap.esm.min.js"></script>
+        <script src="~/assets/lib/bootstrap/dist/js/bootstrap.esm.js"></script>
+        <script src="~/assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="~/assets/lib/bootstrap/dist/js/bootstrap.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" integrity="sha384-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    </environment>
+
+    <!-- /theme JS files -->
+    <script src="~/assets/ckeditor/ckeditor.js"></script>
+    <script src="~/assets/js/jquery/jquery.min.js"></script>
+    <script src="~/assets/demo/demo_configurator.js"></script>
+    <script src="~/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/js/jquery/jquery.min.js"></script>
+    <script src="~/assets/js/app.js"></script>
+    <script src="~/assets/js/vendor/visualization/d3/d3.min.js"></script>
+    <script src="~/assets/js/vendor/visualization/d3/d3_tooltip.js"></script>
+    <script src="~/assets/demo/pages/dashboard.js"></script>
+    <script src="~/assets/demo/charts/pages/dashboard/streamgraph.js"></script>
+    <script src="~/assets/demo/charts/pages/dashboard/sparklines.js"></script>
+    <script src="~/assets/demo/charts/pages/dashboard/lines.js"></script>
+    <script src="~/assets/demo/charts/pages/dashboard/areas.js"></script>
+    <script src="~/assets/demo/charts/pages/dashboard/donuts.js"></script>
+    <script src="~/assets/demo/charts/pages/dashboard/bars.js"></script>
+    <script src="~/assets/demo/charts/pages/dashboard/progress.js"></script>
+    <script src="~/assets/demo/charts/pages/dashboard/heatmaps.js"></script>
+    <script src="~/assets/demo/charts/pages/dashboard/pies.js"></script>
+    <script src="~/assets/demo/charts/pages/dashboard/bullets.js"></script>
+
+    <!-- /theme JS files -->
+
+</head>
+<body>
+    <div class="page-content">
+        <div class="content-inner">
+            <!-- Main sidebar -->
+            <div class="sidebar-wrapper">
+                <!-- Sidebar header -->
+                <div class="sidebar-header">
+                    <div class="navbar-brand">
+                        <a href="/" class="d-inline-flex align-items-center">
+                            <img style="height: 45px" src="~/assets/images/logo.png" />
+                        </a>
+                    </div>
+                </div>
+                <!-- /sidebar header -->
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container">
+
+                        <div class="d-lg-none ms-auto me-4">
+                            <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
+                        </div>
+
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav ms-lg-5 me-lg-auto"> 
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hợp Đồng</a>
+
+                                    <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">                                     
+                                        <li><a class="dropdown-item" asp-controller="HopDong" asp-action="Index">Danh sách hợp đồng</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Khách Hàng</a>
+
+                                    <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">                      
+                                        <li><a class="dropdown-item" asp-controller="KhachHang" asp-action="Index">Danh sách khách hàng</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Nhân viên</a>
+
+                                    <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">                                      
+                                        <li><a class="dropdown-item" asp-controller="NhanVien" asp-action="Index">Danh sách nhân viên</a></li>
+                                    </ul>
+                                </li> 
+                            </ul>
+                            <div class="col mr-auto">
+                                <div class="d-lg-flex mb-2 mb-lg-0">
+                                    <ul class="nav flex-row justify-content-end order-1 order-lg-2">
+                                        @if (SignInManager.IsSignedIn(User))
+                                        {
+                                            <a style="color:white !important" class="d-flex align-items-center text-body py-2" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+                                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                                <button style="color: white !important;" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <a style="margin:0 10px; color: white !important" class="d-flex align-items-center text-body py-2" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                                            <a style="color:white !important" class="d-flex align-items-center text-body py-2" asp-area="Identity" asp-page="/Account/Login">Login</a>
+
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="d-none d-lg-block">
+                                <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                <!-- /Main navigation -->
+            </div>
+
+            @RenderBody()
+            @RenderSection("Scripts", required: false)
+        </div>
+    </div>
+    <!-- Demo config -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="demo_config">
+        <div class="border-top text-center py-2 px-3">
+            <a href="https://themeforest.net/item/limitless-responsive-web-application-kit/13080328?ref=kopyov"
+               class="btn btn-yellow fw-semibold w-100 my-1" target="_blank">
+                <i class="ph-shopping-cart me-2"></i>
+                Purchase Limitless
+            </a>
+        </div>
+    </div>
+</body>
+</html>

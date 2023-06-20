@@ -1,0 +1,80 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<h3>@ViewData["Title"]</h3>ViewData["ActivePage"] = ManageNavPages.Index;
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form id="profile-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating">
+                <input asp-for="Username" class="form-control" disabled />
+                <label asp-for="Username" class="form-label"></label>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.PhoneNumber" class="form-control" />
+                <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+        </form>
+    </div>
+</div>*@
+
+<div class="content-wrapper">
+    <div class="content-inner">
+        <div class="page-header page-header-light shadow">
+            <div class="page-header-content d-lg-flex border-top">
+                <div class="d-flex">
+                    <div class="breadcrumb py-2">
+                        <a asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="ph-house"></i></a>
+                        <span class="breadcrumb-item active">Nhân Viên</span>
+                        <span class="breadcrumb-item active"><a asp-controller="NhanVien" asp-action="Index">DS Nhân Viên</a></span>
+                        <span class="breadcrumb-item active"><a asp-controller="NhanVien" asp-action="Edit">Chỉnh Sửa TT Nhân Viên</a></span>
+
+                    </div>
+                    <a href="#breadcrumb_elements"
+                       class="btn btn-light align-self-center collapsed d-lg-none border-transparent rounded-pill p-0 ms-auto"
+                       data-bs-toggle="collapse">
+                        <i class="ph-caret-down collapsible-indicator ph-sm m-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="card">              
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>                  
+                    <fieldset style="margin: 15px !important;">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label asp-for="Username" class="form-label"></label>
+                                <input asp-for="Username" class="form-control" disabled />
+                               
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                                <input asp-for="Input.PhoneNumber" class="form-control" />                             
+                                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                                </div>
+                            </div>                         
+                        </div>
+                    </fieldset>
+                    <div style="justify-content:center !important" class="card-footer d-flex justify-content-center">
+                        <a class="btn btn-primary ms-3" style="text-decoration: none;"
+                           asp-action="Index">Quay Lại</a>
+                    <button id="update-profile-button" type="submit" class="btn btn-primary ms-3">Save</button>
+                </div>             
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

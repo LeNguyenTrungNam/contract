@@ -1,0 +1,222 @@
+﻿@model IEnumerable<SignInTPMedia.Models.Nhanvien>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    /* CSS cho popup */
+       .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 500px; 
+        padding: 20px;
+        background-color: #f8f8f8;
+        border: 2px solid #ccc;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        z-index: 9999;
+    }
+
+    .popup h2 {
+        margin-top: 0;
+        font-size: 18px;
+    }
+
+    .popup input[type="text"],input[type="number"],
+    .popup select,
+    .popup button {
+        margin-top: 10px;
+        padding: 5px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .popup button {
+        background-color: #0099FF;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+
+    /* CSS cho phần tử nền mờ */
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Màu đen với độ mờ 50% */
+        z-index: 9998;
+    }
+
+    /* CSS cho lớp active khi hiển thị popup */
+    body.popup-active {
+        overflow: hidden; /* Ẩn thanh cuộn khi popup hiển thị */
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="content-inner">
+        <div class="page-header page-header-light shadow">
+            <div class="page-header-content d-lg-flex">
+                <div class="collapse d-lg-block ms-lg-auto" id="breadcrumb_elements">
+                </div>
+            </div>
+
+            <div class="page-header-content d-lg-flex border-top">
+                <div class="d-flex">
+                    <div class="breadcrumb py-2">
+                        <a asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="ph-house"></i></a>
+                        <span class="breadcrumb-item active">Nhân Viên</span>
+                        <span class="breadcrumb-item active"><a asp-action="Index">DS Nhân Viên</a></span>
+                    </div>
+
+                    <a href="#breadcrumb_elements"
+                       class="btn btn-light align-self-center collapsed d-lg-none border-transparent rounded-pill p-0 ms-auto"
+                       data-bs-toggle="collapse">
+                        <i class="ph-caret-down collapsible-indicator ph-sm m-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="card">
+                <div class="card-body">
+                    <a class="btn btn-primary" id="openPopup">Thêm Nhân viên</a>
+                </div>
+
+                <div id="myPopup" class="popup">
+                    <h2>Nhập thông tin</h2>
+                    <select id="serviceType">
+                        <option value="Service 1">Dịch vụ 1</option>
+                        <option value="Service 2">Dịch vụ 2</option>
+                        <option value="Service 3">Dịch vụ 3</option>
+                    </select>
+                    <select id="unit">
+                        <option value="Piece">Trang</option>
+                        <option value="Hour">Giờ</option>
+                        <option value="Kg">Video</option>
+                    </select>
+                    <input type="text" placeholder="Đơn giá" id="unitPrice">
+                    <input type="number" min="1" placeholder="Số lượng" id="quantity">
+                    <input type="text" placeholder="Thành tiền" id="totalAmount">
+                    <button id="saveButton">Lưu</button>
+                    <button id="closePopup">Đóng</button>
+                </div>
+
+                <div id="overlay" class="overlay"></div>
+
+                <table class="table datatable-selection-single">
+                    <thead>
+                        <tr>
+                            <th>
+                                <span>Thông Tin Cá Nhân</span>
+                            </th>
+                            <th>
+                                <span>Công Việc</span>
+                            </th>
+                            <th>
+                                <span>Tình Trạng</span>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td style="max-width:280px" class="ellipsis">
+                                    <label class="form-label cursor-move">Tên NV: <a asp-action="Details" asp-route-id="@item.MaNv">@Html.DisplayFor(modelItem => item.TenNv)</a></label>
+                                    <div class="item">
+                                        <label class="form-label cursor-move">
+                                            Giới Tính: @if (item.GioiTinh == 1)
+                                            {
+                                                <text>Nam</text>
+                                            }
+                                            else
+                                            {
+                                                <text>Nữ</text>
+                                            }
+                                        </label>
+                                    </div>
+                                    <div class="item">
+                                        <label class="form-label cursor-move">SĐT:  @Html.DisplayFor(modelItem => item.Sdt)</label>
+                                    </div>
+                                    <div class="item">
+                                        <label class="form-label cursor-move">Email: @Html.DisplayFor(modelItem => item.Email)</label>
+                                    </div>
+                                </td>
+                                <td style="max-width:280px" class="ellipsis">
+                                    <label class="form-label cursor-move">Chức Vụ: </label>
+                                    @Html.DisplayFor(modelItem => item.MaChucVuNavigation.TenChucVu)
+                                    <div class="item">
+                                        <label class="form-label cursor-move">Phòng Ban: @Html.DisplayFor(modelItem => item.MaPhongBanNavigation.TenPhongBan)</label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.MaNv"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a asp-action="Delete" asp-route-id="@item.MaNv" onclick="return confirm('Bạn có chắc muốn xóa không?')"><i class="fa-solid fa-trash-can"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("openPopup").addEventListener("click", function () {
+        document.getElementById("myPopup").style.display = "block";
+        document.getElementById("overlay").style.display = "block";
+        document.body.classList.add("popup-active");
+    });
+
+    document.getElementById("closePopup").addEventListener("click", function () {
+        document.getElementById("myPopup").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+        document.body.classList.remove("popup-active");
+
+        // Xoá các dữ liệu đã nhập        
+        document.getElementById("unitPrice").value = "";
+        document.getElementById("quantity").value = "";
+        document.getElementById("totalAmount").value = "";
+    });
+
+
+    // Tính toán tự động khi nhập đơn giá và số lượng
+    document.getElementById("unitPrice").addEventListener("input", calculateTotalAmount);
+    document.getElementById("quantity").addEventListener("input", calculateTotalAmount);
+
+    function calculateTotalAmount() {
+        var unitPrice = document.getElementById("unitPrice").value;
+        var quantity = document.getElementById("quantity").value;
+        var totalAmount = parseFloat(unitPrice) * parseFloat(quantity);
+
+        document.getElementById("totalAmount").value = totalAmount.toFixed(2);
+    }
+
+    document.getElementById("saveButton").addEventListener("click", function () {
+        var serviceType = document.getElementById("serviceType").value;
+        var unit = document.getElementById("unit").value;
+        var unitPrice = document.getElementById("unitPrice").value;
+        var quantity = document.getElementById("quantity").value;
+        var totalAmount = parseFloat(unitPrice) * parseFloat(quantity);
+
+        console.log("Loại dịch vụ: " + serviceType);
+        console.log("Đơn vị tính: " + unit);
+        console.log("Đơn giá: " + unitPrice);
+        console.log("Số lượng: " + quantity);
+        console.log("Thành tiền: " + totalAmount.toFixed(2));
+    });
+</script>
